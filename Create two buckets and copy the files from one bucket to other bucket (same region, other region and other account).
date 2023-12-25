@@ -1,0 +1,9 @@
+Create two buckets and copy the files from one bucket to other bucket (same
+region, other region and other account).
+
+step-1:
+open cmd aws configure 
+aws s3 cp s3://source-test-bucket-testing/IMG20221018172243.jpg s3://destination-bucket-testing-123/
+             one bucket                                         to       other bucket...
+
+
