@@ -1,0 +1,15 @@
+step-1:
+Create a new S3 Bucket
+Click the "Create bucket" button.
+Enter a unique and meaningful name for your bucket.
+Choose a region for your bucket.
+Object Ownership :- ACLs Enabled
+Block all public access "Uncheck the tick mark" ....
+create bucket....
+
+step-2:-
+upload static hosting files and folders ....
+Select all files then go to action select Make public using ACL option
+Go to permision tab then enable static web hosting..
+Index document: index.html
+Bucket website endpoint: url will be available....
