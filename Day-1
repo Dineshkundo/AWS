@@ -1,6 +1,52 @@
-Client - Server Architecture:-
+As an administrator, you can configure credentials (access keys, passwords, signing certificates, and SSH public keys) and MFA devices for your IAM users.  This is acceptable when you have a few users to set up and configure who need access to your AWS Account.  However, when you need to create and manage hundreds of users, then it becomes a very time-consuming task for a single administrator to perform.
 
-Types:-
-1-tier
-2-tier
-3-tier
+Attach this policies to get iam permission for MFA.
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowViewAccountInfo",
+            "Effect": "Allow",
+            "Action": "iam:ListVirtualMFADevices",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowManageOwnVirtualMFADevice",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateVirtualMFADevice"
+            ],
+            "Resource": "arn:aws:iam::*:mfa/*"
+        },
+        {
+            "Sid": "AllowManageOwnUserMFA",
+            "Effect": "Allow",
+            "Action": [
+                "iam:DeactivateMFADevice",
+                "iam:EnableMFADevice",
+                "iam:GetUser",
+                "iam:GetMFADevice",
+                "iam:ListMFADevices",
+                "iam:ResyncMFADevice"
+            ],
+            "Resource": "arn:aws:iam::*:user/${aws:username}"
+        },
+        {
+            "Sid": "DenyAllExceptListedIfNoMFA",
+            "Effect": "Deny",
+            "NotAction": [
+                "iam:CreateVirtualMFADevice",
+                "iam:EnableMFADevice",
+                "iam:GetUser",
+                "iam:ListMFADevices",
+                "iam:ListVirtualMFADevices",
+                "iam:ResyncMFADevice",
+                "sts:GetSessionToken"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "BoolIfExists": {"aws:MultiFactorAuthPresent": "false"}
+            }
+        }
+    ]
+}
